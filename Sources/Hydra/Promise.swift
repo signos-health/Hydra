@@ -42,7 +42,7 @@ public class Promise<Value> {
 	internal var state: State = .pending
 	
 	/// This is the queue used to ensure thread safety on Promise's `state`.
-	internal let stateQueue = DispatchQueue(label: "com.mokasw.promise")
+    internal let stateQueue = DispatchQueue(label: "com.mokasw.promise", qos: .default)
 	
 	/// Body of the promise.
 	/// This define the real core of your async function.
@@ -51,7 +51,7 @@ public class Promise<Value> {
 	
 	/// Context (GCD queue) in which the body of the promise is executed
 	/// By default background queue is used.
-	private(set) var context: Context = Context.custom(queue: DispatchQueue.global(qos: .background))
+	private(set) var context: Context = Context.custom(queue: DispatchQueue.global(qos: .default))
 	
 	/// Observers of the promise; define a callback called in specified context with the result of resolve/reject of the promise
 	private var observers: [Observer] = []
@@ -140,7 +140,7 @@ public class Promise<Value> {
 	public init(in context: Context? = nil, token: InvalidationToken? = nil, _ body: @escaping Body) {
 		self.invalidationToken = token
 		self.state = .pending
-		self.context = context ?? Context.custom(queue: DispatchQueue.global(qos: .background))
+		self.context = context ?? Context.custom(queue: DispatchQueue.global(qos: .default))
 		self.body = body
 	}
 	

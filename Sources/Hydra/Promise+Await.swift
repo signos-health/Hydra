@@ -38,7 +38,7 @@ import Foundation
 /// but tasks are still started in the order in which they were added to the queue.
 /// The currently executing tasks run on distinct threads that are managed by the dispatch queue.
 /// The exact number of tasks executing at any given point is variable and depends on system conditions.
-let awaitContext = Context.custom(queue: DispatchQueue(label: "com.hydra.awaitcontext", attributes: .concurrent))
+let awaitContext = Context.custom(queue: DispatchQueue(label: "com.hydra.awaitcontext", qos: .default, attributes: .concurrent))
 
 /// This define a `..` operator you can use instead of calling `await` func.
 /// If you use this operator you need to also use `do/catch` in order to catch exception for rejected promises.

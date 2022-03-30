@@ -57,7 +57,7 @@ public func all<L, S: Sequence>(_ promises: S, concurrency: UInt = UInt.max) -> 
 	let allPromise = Promise<[L]> { (resolve, reject, operation) in
 		var countRemaining = Array(promises).count
 		var countRunningPromises: UInt = 0
-		let allPromiseContext = Context.custom(queue: DispatchQueue(label: "com.hydra.queue.all"))
+		let allPromiseContext = Context.custom(queue: DispatchQueue(label: "com.hydra.queue.all", qos: .default))
 		
 		for currentPromise in promises {
 			// Listen for each promise in list to fulfill or reject
